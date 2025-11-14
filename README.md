@@ -26,6 +26,7 @@ It contains detailed information about titles, cast, directors, rating, duration
 
 ## 🗂️ Schema Used
 
+```sql
 DROP TABLE IF EXISTS netflix;
 CREATE TABLE netflix
 (
@@ -45,38 +46,25 @@ CREATE TABLE netflix
 
 ## 🔍Business Problems & SQL Solutions 
 
-1️⃣ Count Movies vs TV Shows
+ Count Movies vs TV Shows
+```sql
 SELECT type, COUNT(*)
 FROM netflix
 GROUP BY type;
 
 Insight: Understand overall content distribution.
 
-2️⃣ Most Common Rating for Movies & TV Shows
-WITH RatingCounts AS (
-    SELECT type, rating, COUNT(*) AS rating_count
-    FROM netflix
-    GROUP BY type, rating
-),
-RankedRatings AS (
-    SELECT type, rating, rating_count,
-           RANK() OVER (PARTITION BY type ORDER BY rating_count DESC) AS rank
-    FROM RatingCounts
-)
-SELECT type, rating AS most_frequent_rating
-FROM RankedRatings
-WHERE rank = 1;
 
-Insight: Reveals the target audience category.
-
-3️⃣ List All Movies Released in a Specific Year (2020 Example)
+List All Movies Released in a Specific Year (2020 Example)
+```sql
 SELECT *
 FROM netflix
 WHERE release_year = 2020;
 
 Insight: Review content by release year.
 
-4️⃣ Top 5 Countries with the Most Content
+Top 5 Countries with the Most Content
+```sql
 SELECT country, COUNT(*) AS total_content
 FROM (
   SELECT UNNEST(STRING_TO_ARRAY(country, ',')) AS country
@@ -89,7 +77,8 @@ LIMIT 5;
 
 Insight: Shows strongest-producing countries.
 
-5️⃣ Identify the Longest Movie
+Identify the Longest Movie
+```sql
 SELECT *
 FROM netflix
 WHERE type = 'Movie'
@@ -97,14 +86,16 @@ ORDER BY SPLIT_PART(duration, ' ', 1)::INT DESC;
 
 Insight: Find top long-form content.
 
-6️⃣ Content Added in the Last 5 Years
+Content Added in the Last 5 Years
+```sql
 SELECT *
 FROM netflix
 WHERE TO_DATE(date_added, 'Month DD, YYYY') >= CURRENT_DATE - INTERVAL '5 years';
 
 Insight: Shows recent platform growth.
 
-7️⃣ Content by Director "Rajiv Chilaka"
+ Content by Director "Rajiv Chilaka"
+```sql
 SELECT *
 FROM (
     SELECT *, UNNEST(STRING_TO_ARRAY(director, ',')) AS director_name
@@ -114,7 +105,8 @@ WHERE director_name = 'Rajiv Chilaka';
 
 Insight: Analyze director-based content.
 
-8️⃣ Categorize Content as “Good” or “Bad” (Based on Keywords)
+ Categorize Content as “Good” or “Bad” (Based on Keywords)
+```sql
 SELECT category, COUNT(*) AS content_count
 FROM (
     SELECT CASE
