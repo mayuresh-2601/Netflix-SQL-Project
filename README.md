@@ -3,11 +3,140 @@
 ![Netflix Logo](https://github.com/mayuresh-2601/Netflix-SQL-Project/blob/main/logo.png)
 
 
-##Objectives
+## 📌 Overview
 
-Compare Movies vs TV Shows
-Identify common audience ratings
-Explore global content distribution
-Analyze content by country and release year
-Identify longest content, common genres, and director-specific content
-Extract insights using keyword-based categorization
+This project analyzes Netflix's dataset using SQL to uncover meaningful insights.
+The goal is to understand content distribution, ratings, genres, global production trends, and patterns hidden within the dataset.
+
+## 🎯 Objectives
+
+Compare Movies vs TV Shows.
+Identify common audience ratings.
+Explore global content distribution.
+Analyze content by country and release year.
+Identify longest content, common genres, and director-specific content.
+Extract insights using keyword-based categorization.
+
+## 📁 Dataset
+
+The dataset used is publicly available on Kaggle:
+Netflix Movies and TV Shows Dataset.
+
+It contains detailed information about titles, cast, directors, rating, duration, genres, and more.
+
+## 🗂️ Schema Used
+
+DROP TABLE IF EXISTS netflix;
+CREATE TABLE netflix
+(
+    show_id      VARCHAR(5),
+    type         VARCHAR(10),
+    title        VARCHAR(250),
+    director     VARCHAR(550),
+    casts        VARCHAR(1050),
+    country      VARCHAR(550),
+    date_added   VARCHAR(55),
+    release_year INT,
+    rating       VARCHAR(15),
+    duration     VARCHAR(15),
+    listed_in    VARCHAR(250),
+    description  VARCHAR(550)
+);
+
+## 🔍Business Problems & SQL Solutions 
+
+1️⃣ Count Movies vs TV Shows
+SELECT type, COUNT(*)
+FROM netflix
+GROUP BY type;
+
+Insight: Understand overall content distribution.
+
+2️⃣ Most Common Rating for Movies & TV Shows
+WITH RatingCounts AS (
+    SELECT type, rating, COUNT(*) AS rating_count
+    FROM netflix
+    GROUP BY type, rating
+),
+RankedRatings AS (
+    SELECT type, rating, rating_count,
+           RANK() OVER (PARTITION BY type ORDER BY rating_count DESC) AS rank
+    FROM RatingCounts
+)
+SELECT type, rating AS most_frequent_rating
+FROM RankedRatings
+WHERE rank = 1;
+
+Insight: Reveals the target audience category.
+
+3️⃣ List All Movies Released in a Specific Year (2020 Example)
+SELECT *
+FROM netflix
+WHERE release_year = 2020;
+
+Insight: Review content by release year.
+
+4️⃣ Top 5 Countries with the Most Content
+SELECT country, COUNT(*) AS total_content
+FROM (
+  SELECT UNNEST(STRING_TO_ARRAY(country, ',')) AS country
+  FROM netflix
+) AS t
+WHERE country IS NOT NULL
+GROUP BY country
+ORDER BY total_content DESC
+LIMIT 5;
+
+Insight: Shows strongest-producing countries.
+
+5️⃣ Identify the Longest Movie
+SELECT *
+FROM netflix
+WHERE type = 'Movie'
+ORDER BY SPLIT_PART(duration, ' ', 1)::INT DESC;
+
+Insight: Find top long-form content.
+
+6️⃣ Content Added in the Last 5 Years
+SELECT *
+FROM netflix
+WHERE TO_DATE(date_added, 'Month DD, YYYY') >= CURRENT_DATE - INTERVAL '5 years';
+
+Insight: Shows recent platform growth.
+
+7️⃣ Content by Director "Rajiv Chilaka"
+SELECT *
+FROM (
+    SELECT *, UNNEST(STRING_TO_ARRAY(director, ',')) AS director_name
+    FROM netflix
+) AS t
+WHERE director_name = 'Rajiv Chilaka';
+
+Insight: Analyze director-based content.
+
+8️⃣ Categorize Content as “Good” or “Bad” (Based on Keywords)
+SELECT category, COUNT(*) AS content_count
+FROM (
+    SELECT CASE
+             WHEN description ILIKE '%kill%' OR description ILIKE '%violence%' THEN 'Bad'
+             ELSE 'Good'
+           END AS category
+    FROM netflix
+) AS t
+GROUP BY category;
+
+Insight: Simple NLP-based content classification.
+
+## 📊 Findings & Conclusion
+
+Netflix hosts a balanced mix of movies and TV shows, with shows growing rapidly.
+Certain ratings appear consistently, reflecting Netflix’s broad audience focus.
+The United States, India, and the UK contribute large portions of total content.
+Content released in recent years shows strong increasing trends, especially post-2018.
+Keyword-based classification indicates that Netflix contains both family-friendly and mature content.
+Overall, this project demonstrates how SQL can extract deep insights from raw data and support content strategy decisions.
+
+## 👨‍💻 Author – Mayuresh Kasar 
+
+This project is part of my Data Analytics portfolio, showcasing SQL skills used in real business scenarios.
+For collaboration or feedback, feel free to connect!
