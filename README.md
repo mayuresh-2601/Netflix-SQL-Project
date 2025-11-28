@@ -1,37 +1,27 @@
-# 🎬 **Netflix Movies and TV Shows Data Analysis Using SQL**
+# Netflix Movies and TV Shows Data Analysis Using SQL
 
 ![Netflix Logo](https://github.com/mayuresh-2601/Netflix-SQL-Project/blob/main/logo.png)
 
 ## 📌 Overview
 
-This project analyzes Netflix’s dataset using SQL to uncover meaningful insights.  
-The aim is to understand content distribution, audience ratings, genres, global production trends, and patterns hidden within the data.
+This project analyzes Netflix's dataset using SQL to uncover meaningful insights.
+The goal is to understand content distribution, ratings, genres, global production trends, and patterns hidden within the dataset.
 
 ## 🎯 Objectives
 
-- Compare Movies vs TV Shows  
-- Identify common audience ratings  
-- Explore global content distribution  
-- Analyze content by country and release year  
-- Identify longest content and genre trends  
-- Explore director-specific patterns  
-- Categorize content using keyword analysis  
+Compare Movies vs TV Shows.  
+Identify common audience ratings.  
+Explore global content distribution.  
+Analyze content by country and release year.  
+Identify longest content, common genres, and director-specific content.  
+Extract insights using keyword-based categorization.
 
 ## 📁 Dataset
 
-The dataset is publicly available on **Kaggle** under:  
-**Netflix Movies and TV Shows Dataset**
+The dataset used is publicly available on Kaggle:  
+Netflix Movies and TV Shows Dataset.
 
-It includes details such as:  
-✔ Title  
-✔ Cast  
-✔ Director  
-✔ Rating  
-✔ Duration  
-✔ Genre  
-✔ Release Year  
-✔ Country  
-✔ Description  
+It contains detailed information about titles, cast, directors, rating, duration, genres, and more.
 
 ## 🗂️ Schema Used
 
@@ -54,9 +44,9 @@ CREATE TABLE netflix
 );
 ```
 
-# 🔍 **Business Problems & SQL Solutions**
+## 🔍Business Problems & SQL Solutions 
 
-### **1️⃣ Count Movies vs TV Shows**
+### Count Movies vs TV Shows
 
 ```sql
 SELECT type, COUNT(*)
@@ -64,7 +54,9 @@ FROM netflix
 GROUP BY type;
 ```
 
-### **2️⃣ Movies Released in 2020**
+Insight: Understand overall content distribution.
+
+### List All Movies Released in a Specific Year (2020 Example)
 
 ```sql
 SELECT *
@@ -72,13 +64,15 @@ FROM netflix
 WHERE release_year = 2020;
 ```
 
-### **3️⃣ Top 5 Countries with the Most Content**
+Insight: Review content by release year.
+
+### Top 5 Countries with the Most Content
 
 ```sql
 SELECT country, COUNT(*) AS total_content
 FROM (
-    SELECT UNNEST(STRING_TO_ARRAY(country, ',')) AS country
-    FROM netflix
+  SELECT UNNEST(STRING_TO_ARRAY(country, ',')) AS country
+  FROM netflix
 ) AS t
 WHERE country IS NOT NULL
 GROUP BY country
@@ -86,7 +80,9 @@ ORDER BY total_content DESC
 LIMIT 5;
 ```
 
-### **4️⃣ Identify the Longest Movie**
+Insight: Shows strongest-producing countries.
+
+### Identify the Longest Movie
 
 ```sql
 SELECT *
@@ -95,7 +91,9 @@ WHERE type = 'Movie'
 ORDER BY SPLIT_PART(duration, ' ', 1)::INT DESC;
 ```
 
-### **5️⃣ Content Added in the Last 5 Years**
+Insight: Find top long-form content.
+
+### Content Added in the Last 5 Years
 
 ```sql
 SELECT *
@@ -103,7 +101,9 @@ FROM netflix
 WHERE TO_DATE(date_added, 'Month DD, YYYY') >= CURRENT_DATE - INTERVAL '5 years';
 ```
 
-### **6️⃣ Content by Director “Rajiv Chilaka”**
+Insight: Shows recent platform growth.
+
+### Content by Director "Rajiv Chilaka"
 
 ```sql
 SELECT *
@@ -114,7 +114,9 @@ FROM (
 WHERE director_name = 'Rajiv Chilaka';
 ```
 
-### **7️⃣ Good vs Bad Content Categorization**
+Insight: Analyze director-based content.
+
+### Categorize Content as “Good” or “Bad” (Based on Keywords)
 
 ```sql
 SELECT category, COUNT(*) AS content_count
@@ -128,15 +130,18 @@ FROM (
 GROUP BY category;
 ```
 
+Insight: Simple NLP-based content classification.
+
 ## 📊 Findings & Conclusion
 
-- Netflix has a strong balance between Movies and TV Shows.  
-- Ratings like **TV-MA, TV-14, PG-13** frequently appear.  
-- The **United States, India, and the UK** are the biggest contributors.  
-- Content additions increased sharply post-2018.  
-- Keyword-based classification shows mixed content types.  
+Netflix hosts a balanced mix of movies and TV shows, with shows growing rapidly.  
+Certain ratings appear consistently, reflecting Netflix’s broad audience focus.  
+The United States, India, and the UK contribute large portions of total content.  
+Content released in recent years shows strong increasing trends, especially post-2018.  
+Keyword-based classification indicates that Netflix contains both family-friendly and mature content.  
+Overall, this project demonstrates how SQL can extract deep insights from raw data and support content strategy decisions.
 
-## 👨‍💻 **Author – Mayuresh Kasar**
+## 👨‍💻 Author – Mayuresh Kasar 
 
-This project is part of my **Data Analytics portfolio**.  
-Feel free to connect for collaboration or feedback!
+This project is part of my Data Analytics portfolio, showcasing SQL skills used in real business scenarios.  
+For collaboration or feedback, feel free to connect!
