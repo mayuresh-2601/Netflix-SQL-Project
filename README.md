@@ -9,12 +9,12 @@ The goal is to understand content distribution, ratings, genres, global producti
 
 ## 🎯 Objectives
 
-Compare Movies vs TV Shows.  
-Identify common audience ratings.  
-Explore global content distribution.  
-Analyze content by country and release year.  
-Identify longest content, common genres, and director-specific content.  
-Extract insights using keyword-based categorization.
+- Compare Movies vs TV Shows.  
+- Identify common audience ratings.  
+- Explore global content distribution.  
+- Analyze content by country and release year.  
+- Identify longest content, common genres, and director-specific content.  
+- Extract insights using keyword-based categorization.
 
 ## 📁 Dataset
 
@@ -134,12 +134,12 @@ Insight: Simple NLP-based content classification.
 
 ## 📊 Findings & Conclusion
 
-Netflix hosts a balanced mix of movies and TV shows, with shows growing rapidly.  
-Certain ratings appear consistently, reflecting Netflix’s broad audience focus.  
-The United States, India, and the UK contribute large portions of total content.  
-Content released in recent years shows strong increasing trends, especially post-2018.  
-Keyword-based classification indicates that Netflix contains both family-friendly and mature content.  
-Overall, this project demonstrates how SQL can extract deep insights from raw data and support content strategy decisions.
+- Netflix hosts a balanced mix of movies and TV shows, with shows growing rapidly.  
+- Certain ratings appear consistently, reflecting Netflix’s broad audience focus.  
+- The United States, India, and the UK contribute large portions of total content.  
+- Content released in recent years shows strong increasing trends, especially post-2018.  
+- Keyword-based classification indicates that Netflix contains both family-friendly and mature content.  
+- Overall, this project demonstrates how SQL can extract deep insights from raw data and support content strategy decisions.
 
 ## 👨‍💻 Author – Mayuresh Kasar 
 
