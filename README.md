@@ -2,7 +2,7 @@
 
 ![Netflix Logo](https://github.com/mayuresh-2601/Netflix-SQL-Project/blob/main/logo.png)
             
-## 📌 Overview 
+## 📌 Overview     
 
 This project analyzes Netflix's dataset using SQL to uncover meaningful insights.
 The goal is to understand content distribution, ratings, genres, global production trends, and patterns hidden within the dataset.
