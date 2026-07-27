@@ -7,7 +7,7 @@ use netflix_project;
 -- 1. count the number of movies vs tv shows 
 select type, count(*) as total_count
 from netflix
-group by type;
+group by type;    
 
 -- 2. find the most common rating for movies and tv shows 
 
