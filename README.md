@@ -6,7 +6,7 @@
 
 This project analyzes Netflix's dataset using SQL to uncover meaningful insights.
 The goal is to understand content distribution, ratings, genres, global production trends, and patterns hidden within the dataset.
-
+                
 ## 🎯 Objectives
 
 - Compare Movies vs TV Shows.  
